@@ -30,9 +30,9 @@ def declare_cc_toolchains(os, zig_sdk_path):
 
         dynamic_library_linkopts = target_config.dynamic_library_linkopts
         copts = target_config.copts
-        linkopts = []
+        linkopts = target_config.linkopts
         for s in getattr(target_config, "linker_version_scripts", []):
-            linkopts = ["-Wl,--version-script,%s/%s" % (zig_sdk_path, s)]
+            linkopts = linkopts + ["-Wl,--version-script,%s/%s" % (zig_sdk_path, s)]
         for incl in getattr(target_config, "compiler_extra_includes", []):
             copts = copts + ["-include", zig_sdk_path + "/" + incl]
 
