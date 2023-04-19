@@ -266,6 +266,7 @@ def declare_files(os):
     for target_config in target_structs():
         all_includes = [native.glob(["lib/{}/**".format(i)]) for i in target_config.includes]
         all_includes.append(getattr(target_config, "compiler_extra_includes", []))
+        linker_version_scripts = getattr(target_config, "linker_version_scripts", [])
 
         cxx_tool_label = ":" + zig_tool_path(os).format(
             zig_tool = "c++",
@@ -301,7 +302,7 @@ def declare_files(os):
                 "lib/std/**",
                 "lib/*.zig",
                 "lib/*.h",
-            ]),
+            ]) + linker_version_scripts,
         )
 
         filegroup(
